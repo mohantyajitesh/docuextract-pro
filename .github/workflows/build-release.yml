@@ -185,8 +185,8 @@ jobs:
       - name: Install Rust target
         run: rustup target add ${{ matrix.target }}
 
-      - name: Install Tauri CLI
-        run: cargo install tauri-cli
+      - name: Install Tauri CLI v1
+        run: cargo install tauri-cli@1.6.5
 
       - name: Download Python sidecar
         uses: actions/download-artifact@v4
