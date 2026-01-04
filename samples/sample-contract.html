@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Services Agreement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.8;
+            color: #222;
+            padding: 50px 60px;
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            font-size: 14px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h2 {
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .contract-meta {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #333;
+        }
+        .contract-meta p {
+            margin: 5px 0;
+        }
+        .parties {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+        }
+        .party {
+            width: 45%;
+        }
+        .party h3 {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section p {
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+        .subsection {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        th {
+            background: #333;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        td {
+            font-size: 13px;
+        }
+        .signatures {
+            margin-top: 60px;
+            page-break-inside: avoid;
+        }
+        .signature-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+        }
+        .signature-block {
+            width: 45%;
+        }
+        .signature-line {
+            border-bottom: 2px solid #333;
+            min-height: 50px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        .signature-handwriting {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 28px;
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            color: #1a365d;
+        }
+        .signature-label {
+            font-size: 12px;
+            color: #666;
+        }
+        .date-line {
+            border-bottom: 1px solid #999;
+            display: inline-block;
+            width: 150px;
+            margin-left: 10px;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+        }
+        .highlight {
+            background: #fffde7;
+            padding: 2px 5px;
+        }
+        ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Professional Services Agreement</h1>
+
+    <div class="contract-meta">
+        <p><strong>Contract Number:</strong> PSA-2024-00178</p>
+        <p><strong>Effective Date:</strong> January 1, 2024</p>
+        <p><strong>Expiration Date:</strong> December 31, 2024</p>
+    </div>
+
+    <div class="parties">
+        <div class="party">
+            <h3>Service Provider ("Provider")</h3>
+            <p><strong>TechFlow Solutions Inc.</strong></p>
+            <p>123 Innovation Drive, Suite 400</p>
+            <p>San Francisco, CA 94102</p>
+            <p>EIN: 94-3829471</p>
+            <p>Contact: Michael Chen, VP Sales</p>
+            <p>Email: mchen@techflowsolutions.com</p>
+        </div>
+        <div class="party">
+            <h3>Client ("Client")</h3>
+            <p><strong>Acme Corporation</strong></p>
+            <p>456 Business Park Blvd</p>
+            <p>Austin, TX 78701</p>
+            <p>EIN: 74-2918374</p>
+            <p>Contact: Jennifer Walsh, CTO</p>
+            <p>Email: jwalsh@acmecorp.com</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>1. Scope of Services</h2>
+        <p>Provider agrees to provide the following professional services to Client:</p>
+        <ol type="a">
+            <li>Custom software development for Client's enterprise resource planning (ERP) system</li>
+            <li>Integration of existing legacy systems with new cloud-based infrastructure</li>
+            <li>User interface and experience (UI/UX) design for web and mobile applications</li>
+            <li>Database architecture design and optimization</li>
+            <li>Quality assurance testing and documentation</li>
+            <li>Post-deployment support and maintenance for a period of 12 months</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>2. Project Timeline</h2>
+        <p>The project shall be completed according to the following milestones:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Milestone</th>
+                    <th>Deliverable</th>
+                    <th>Due Date</th>
+                    <th>Payment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Phase 1</td>
+                    <td>Requirements & Architecture Design</td>
+                    <td>February 15, 2024</td>
+                    <td>$25,000</td>
+                </tr>
+                <tr>
+                    <td>Phase 2</td>
+                    <td>Core Development Complete</td>
+                    <td>April 30, 2024</td>
+                    <td>$50,000</td>
+                </tr>
+                <tr>
+                    <td>Phase 3</td>
+                    <td>Integration & Testing</td>
+                    <td>June 30, 2024</td>
+                    <td>$35,000</td>
+                </tr>
+                <tr>
+                    <td>Phase 4</td>
+                    <td>Deployment & Training</td>
+                    <td>August 15, 2024</td>
+                    <td>$25,000</td>
+                </tr>
+                <tr>
+                    <td>Final</td>
+                    <td>Project Closeout & Documentation</td>
+                    <td>September 1, 2024</td>
+                    <td>$15,000</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>Total Contract Value: <span class="highlight">$150,000.00 USD</span></strong></p>
+    </div>
+
+    <div class="section">
+        <h2>3. Payment Terms</h2>
+        <p>3.1 Client shall pay Provider according to the milestone schedule above within thirty (30) days of milestone acceptance.</p>
+        <p>3.2 All payments shall be made in US Dollars via wire transfer to Provider's designated bank account.</p>
+        <p>3.3 Late payments shall accrue interest at a rate of 1.5% per month.</p>
+        <p>3.4 Provider reserves the right to suspend services if payment is more than 45 days overdue.</p>
+    </div>
+
+    <div class="section">
+        <h2>4. Intellectual Property</h2>
+        <p>4.1 All custom software, documentation, and deliverables created specifically for Client under this Agreement shall become the exclusive property of Client upon full payment.</p>
+        <p>4.2 Provider retains ownership of all pre-existing tools, libraries, and methodologies used in the project.</p>
+        <p>4.3 Provider grants Client a perpetual, non-exclusive license to use any Provider-owned components incorporated into the deliverables.</p>
+    </div>
+
+    <div class="section">
+        <h2>5. Confidentiality</h2>
+        <p>Both parties agree to maintain the confidentiality of all proprietary information exchanged during the course of this Agreement. This obligation shall survive termination of the Agreement for a period of five (5) years.</p>
+    </div>
+
+    <div class="section">
+        <h2>6. Warranty</h2>
+        <p>Provider warrants that all services shall be performed in a professional manner consistent with industry standards. Provider shall correct any defects in deliverables reported within ninety (90) days of acceptance at no additional cost to Client.</p>
+    </div>
+
+    <div class="section">
+        <h2>7. Limitation of Liability</h2>
+        <p>In no event shall either party be liable for any indirect, incidental, special, or consequential damages. Provider's total liability under this Agreement shall not exceed the total fees paid by Client.</p>
+    </div>
+
+    <div class="section">
+        <h2>8. Termination</h2>
+        <p>Either party may terminate this Agreement with thirty (30) days written notice. In the event of termination, Client shall pay for all services rendered through the termination date.</p>
+    </div>
+
+    <div class="section">
+        <h2>9. Governing Law</h2>
+        <p>This Agreement shall be governed by the laws of the State of California without regard to conflicts of law principles. Any disputes shall be resolved through binding arbitration in San Francisco, CA.</p>
+    </div>
+
+    <div class="signatures">
+        <h2>10. Signatures</h2>
+        <p>IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first written above.</p>
+
+        <div class="signature-row">
+            <div class="signature-block">
+                <p><strong>For Provider: TechFlow Solutions Inc.</strong></p>
+                <div class="signature-line">
+                    <span class="signature-handwriting">Michael Chen</span>
+                </div>
+                <p class="signature-label">Signature</p>
+                <p><strong>Name:</strong> Michael Chen</p>
+                <p><strong>Title:</strong> Vice President, Sales</p>
+                <p><strong>Date:</strong> January 1, 2024</p>
+            </div>
+            <div class="signature-block">
+                <p><strong>For Client: Acme Corporation</strong></p>
+                <div class="signature-line">
+                    <span class="signature-handwriting">Jennifer Walsh</span>
+                </div>
+                <p class="signature-label">Signature</p>
+                <p><strong>Name:</strong> Jennifer Walsh</p>
+                <p><strong>Title:</strong> Chief Technology Officer</p>
+                <p><strong>Date:</strong> January 1, 2024</p>
+            </div>
+        </div>
+
+        <div class="signature-row">
+            <div class="signature-block">
+                <p><strong>Witness for Provider:</strong></p>
+                <div class="signature-line">
+                    <span class="signature-handwriting">David Park</span>
+                </div>
+                <p class="signature-label">Signature</p>
+                <p><strong>Name:</strong> David Park</p>
+                <p><strong>Title:</strong> General Counsel</p>
+                <p><strong>Date:</strong> January 1, 2024</p>
+            </div>
+            <div class="signature-block">
+                <p><strong>Witness for Client:</strong></p>
+                <div class="signature-line">
+                    <span class="signature-handwriting">Robert Kim</span>
+                </div>
+                <p class="signature-label">Signature</p>
+                <p><strong>Name:</strong> Robert Kim</p>
+                <p><strong>Title:</strong> Legal Counsel</p>
+                <p><strong>Date:</strong> January 1, 2024</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Professional Services Agreement | Contract #PSA-2024-00178 | Page 1 of 1</p>
+        <p>This document is legally binding upon signature by both parties.</p>
+    </div>
+</body>
+</html>

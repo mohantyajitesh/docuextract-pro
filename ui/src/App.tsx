@@ -1,11 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Header } from './components/Header';
 import { DropZone } from './components/DropZone';
 import { ProcessingCard } from './components/ProcessingCard';
 import { ResultsViewer } from './components/ResultsViewer';
 import { StatusBar } from './components/StatusBar';
+import { WelcomeModal } from './components/WelcomeModal';
+import { TimeSavedBanner } from './components/TimeSavedBanner';
+import { ErrorAlert } from './components/ErrorAlert';
+import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal';
+import { ProcessingHistory } from './components/ProcessingHistory';
 import { usePolling } from './hooks/usePolling';
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import {
   checkHealth,
   processDocument,
@@ -33,6 +39,14 @@ function App() {
 
   const [activeJobs, setActiveJobs] = useState<ActiveJob[]>([]);
   const [selectedResult, setSelectedResult] = useState<ExtractionResult | null>(null);
+  const [showWelcome, setShowWelcome] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !localStorage.getItem('docuextract_hide_welcome');
+    }
+    return true;
+  });
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const queryClient = useQueryClient();
 
@@ -132,11 +146,72 @@ function App() {
     (j) => j.status?.status === 'processing' || j.status?.status === 'pending'
   );
 
+  const completedJobsCount = activeJobs.filter(
+    (j) => j.status?.status === 'completed'
+  ).length;
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts([
+    {
+      key: 'u',
+      ctrl: true,
+      description: 'Upload new document',
+      callback: () => fileInputRef.current?.click(),
+    },
+    {
+      key: 'e',
+      ctrl: true,
+      description: 'Export results (JSON)',
+      callback: () => selectedResult && handleExport('json'),
+    },
+    {
+      key: 'd',
+      ctrl: true,
+      description: 'Toggle dark mode',
+      callback: () => setDarkMode(!darkMode),
+    },
+    {
+      key: 'Escape',
+      description: 'Close modals',
+      callback: () => {
+        setShowWelcome(false);
+        setShowShortcuts(false);
+      },
+    },
+    {
+      key: '?',
+      shift: true,
+      description: 'Show keyboard shortcuts',
+      callback: () => setShowShortcuts(true),
+    },
+  ]);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+      {/* Hidden file input for keyboard shortcut */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        className="hidden"
+        accept=".pdf,.png,.jpg,.jpeg,.tiff,.bmp"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) handleFileSelect(file);
+          e.target.value = '';
+        }}
+      />
+      <WelcomeModal isOpen={showWelcome} onClose={() => setShowWelcome(false)} />
+      <KeyboardShortcutsModal isOpen={showShortcuts} onClose={() => setShowShortcuts(false)} />
       <Header darkMode={darkMode} onToggleDarkMode={() => setDarkMode(!darkMode)} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        {/* Time Saved Banner */}
+        {completedJobsCount > 0 && (
+          <div className="mb-6">
+            <TimeSavedBanner documentsProcessed={completedJobsCount} />
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left Column - Upload & Jobs */}
           <div className="space-y-6">
@@ -148,9 +223,15 @@ function App() {
               <DropZone onFileSelect={handleFileSelect} isProcessing={isProcessing} />
 
               {processMutation.isError && (
-                <p className="mt-2 text-sm text-danger-600">
-                  {(processMutation.error as Error).message}
-                </p>
+                <div className="mt-4">
+                  <ErrorAlert
+                    error={processMutation.error as Error}
+                    onDismiss={() => processMutation.reset()}
+                    onRetry={() => {
+                      processMutation.reset();
+                    }}
+                  />
+                </div>
               )}
             </div>
 
@@ -176,6 +257,9 @@ function App() {
                 </div>
               </div>
             )}
+
+            {/* Processing History */}
+            <ProcessingHistory onSelectJob={handleViewResult} />
 
             {/* What You Get Section */}
             <div className="card p-6">
