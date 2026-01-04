@@ -33,10 +33,11 @@ jobs:
             target: x86_64-pc-windows-msvc
             sidecar-name: docuextract-backend-x86_64-pc-windows-msvc.exe
             separator: ';'
-          - os: ubuntu-22.04
-            target: x86_64-unknown-linux-gnu
-            sidecar-name: docuextract-backend-x86_64-unknown-linux-gnu
-            separator: ':'
+          # Linux disabled - PyInstaller bundle exceeds 4GB limit
+          # - os: ubuntu-22.04
+          #   target: x86_64-unknown-linux-gnu
+          #   sidecar-name: docuextract-backend-x86_64-unknown-linux-gnu
+          #   separator: ':'
 
     runs-on: ${{ matrix.os }}
 
@@ -148,6 +149,7 @@ jobs:
   # Build Tauri app for each platform
   build-tauri:
     needs: build-python-sidecar
+    if: always()
     strategy:
       fail-fast: false
       matrix:
@@ -161,21 +163,16 @@ jobs:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             bundle: msi
-          - os: ubuntu-22.04
-            target: x86_64-unknown-linux-gnu
-            bundle: deb
+          # Linux disabled - PyInstaller bundle exceeds 4GB limit
+          # - os: ubuntu-22.04
+          #   target: x86_64-unknown-linux-gnu
+          #   bundle: deb
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-22.04'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
