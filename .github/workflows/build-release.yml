@@ -23,20 +23,20 @@ jobs:
         include:
           - os: macos-latest
             target: aarch64-apple-darwin
-            python-target: macosx_11_0_arm64
             sidecar-name: docuextract-backend-aarch64-apple-darwin
+            separator: ':'
           - os: macos-13
             target: x86_64-apple-darwin
-            python-target: macosx_10_9_x86_64
             sidecar-name: docuextract-backend-x86_64-apple-darwin
+            separator: ':'
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            python-target: win_amd64
             sidecar-name: docuextract-backend-x86_64-pc-windows-msvc.exe
+            separator: ';'
           - os: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
-            python-target: manylinux2014_x86_64
             sidecar-name: docuextract-backend-x86_64-unknown-linux-gnu
+            separator: ':'
 
     runs-on: ${{ matrix.os }}
 
@@ -49,21 +49,37 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install system dependencies (Linux)
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils libgl1-mesa-glx
+
+      - name: Install system dependencies (macOS)
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          brew install poppler
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
           pip install -r requirements.txt
+        env:
+          # Skip building some heavy optional deps
+          PIP_NO_BUILD_ISOLATION: false
 
-      - name: Build Python sidecar with PyInstaller
+      - name: Build Python sidecar with PyInstaller (Unix)
+        if: matrix.os != 'windows-latest'
         run: |
           pyinstaller --name docuextract-backend \
             --onefile \
             --noconfirm \
             --clean \
-            --add-data "src:src" \
+            --add-data "src${{ matrix.separator }}src" \
             --hidden-import=langchain \
             --hidden-import=langchain_ollama \
+            --hidden-import=langchain_core \
             --hidden-import=langgraph \
             --hidden-import=easyocr \
             --hidden-import=cv2 \
@@ -72,9 +88,38 @@ jobs:
             --hidden-import=pydantic \
             --hidden-import=fastapi \
             --hidden-import=uvicorn \
+            --hidden-import=starlette \
+            --hidden-import=pymupdf \
+            --hidden-import=fitz \
             --collect-all easyocr \
-            --collect-all docling \
-            --collect-all img2table \
+            --collect-all pymupdf4llm \
+            sidecar_entry.py
+
+      - name: Build Python sidecar with PyInstaller (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          pyinstaller --name docuextract-backend `
+            --onefile `
+            --noconfirm `
+            --clean `
+            --add-data "src;src" `
+            --hidden-import=langchain `
+            --hidden-import=langchain_ollama `
+            --hidden-import=langchain_core `
+            --hidden-import=langgraph `
+            --hidden-import=easyocr `
+            --hidden-import=cv2 `
+            --hidden-import=PIL `
+            --hidden-import=numpy `
+            --hidden-import=pydantic `
+            --hidden-import=fastapi `
+            --hidden-import=uvicorn `
+            --hidden-import=starlette `
+            --hidden-import=pymupdf `
+            --hidden-import=fitz `
+            --collect-all easyocr `
+            --collect-all pymupdf4llm `
             sidecar_entry.py
 
       - name: Rename sidecar binary
@@ -125,11 +170,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Install macOS dependencies
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          brew install poppler
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -137,8 +177,6 @@ jobs:
 
       - name: Setup Rust
         uses: dtolnay/rust-action@stable
-        with:
-          targets: ${{ matrix.target }}
 
       - name: Install Rust target
         run: rustup target add ${{ matrix.target }}
@@ -165,8 +203,6 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           projectPath: src-tauri
           tauriScript: cargo tauri
@@ -185,6 +221,8 @@ jobs:
     needs: build-tauri
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
 
     steps:
       - name: Download all artifacts
@@ -196,7 +234,7 @@ jobs:
         run: ls -R artifacts
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           draft: true
           generate_release_notes: true
