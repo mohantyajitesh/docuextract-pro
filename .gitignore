@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+ui/node_modules/
+ui/dist/
+
+# Rust/Tauri
+src-tauri/target/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output
+output/
+*.log
+
+# Environment
+.env
+.env.local
+
+# License files (user-specific)
+.docuextract/
+
+# Test coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/

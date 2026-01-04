@@ -1,0 +1,113 @@
+{
+  "build": {
+    "beforeDevCommand": "cd ui && npm run dev",
+    "beforeBuildCommand": "cd ui && npm run build",
+    "devPath": "http://localhost:3000",
+    "distDir": "../ui/dist"
+  },
+  "package": {
+    "productName": "DocuExtract Pro",
+    "version": "1.0.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true,
+        "execute": true,
+        "sidecar": true,
+        "scope": [
+          {
+            "name": "python",
+            "cmd": "python",
+            "args": true
+          },
+          {
+            "name": "python3",
+            "cmd": "python3",
+            "args": true
+          },
+          {
+            "name": "ollama",
+            "cmd": "ollama",
+            "args": true
+          }
+        ]
+      },
+      "dialog": {
+        "all": true
+      },
+      "fs": {
+        "all": true,
+        "scope": ["$HOME/**", "$APPDATA/**", "$DOCUMENT/**", "$DOWNLOAD/**"]
+      },
+      "notification": {
+        "all": true
+      },
+      "path": {
+        "all": true
+      },
+      "process": {
+        "all": true
+      },
+      "window": {
+        "all": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "category": "Productivity",
+      "copyright": "Copyright 2024 DocuExtract Pro",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "com.docuextract.pro",
+      "longDescription": "DocuExtract Pro is an AI-powered desktop application that extracts structured data from documents including text, tables, key-value pairs, and signatures. All processing happens locally on your machine for maximum privacy.",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [
+        "../src/**/*",
+        "../resources/**/*"
+      ],
+      "shortDescription": "AI-Powered Document Extraction",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 800,
+        "resizable": true,
+        "title": "DocuExtract Pro",
+        "width": 1200,
+        "minWidth": 800,
+        "minHeight": 600,
+        "center": true
+      }
+    ]
+  }
+}

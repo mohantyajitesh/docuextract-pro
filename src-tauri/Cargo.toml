@@ -1,0 +1,28 @@
+[package]
+name = "docuextract-pro"
+version = "1.0.0"
+description = "AI-Powered Document Extraction Desktop App"
+authors = ["DocuExtract Pro"]
+license = "MIT"
+repository = ""
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = ["shell-open", "dialog-all", "fs-all", "notification-all", "path-all", "process-all", "window-all"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

@@ -1,0 +1,1 @@
+# DocuExtract Pro - License Module
