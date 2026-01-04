@@ -34,12 +34,12 @@ export function ResultsViewer({ result, onExport }: ResultsViewerProps) {
   };
 
   const tabs = [
-    { id: 'summary', label: 'Summary', icon: FileText },
-    { id: 'text', label: 'Text', icon: FileText, count: result.pages },
-    { id: 'tables', label: 'Tables', icon: Table, count: result.tables.length },
-    { id: 'keyvalues', label: 'Key-Values', icon: Key, count: result.key_values.length },
-    { id: 'signatures', label: 'Signatures', icon: PenTool, count: result.signatures.length },
-  ] as const;
+    { id: 'summary' as const, label: 'Summary', icon: FileText, count: undefined },
+    { id: 'text' as const, label: 'Text', icon: FileText, count: result.pages },
+    { id: 'tables' as const, label: 'Tables', icon: Table, count: result.tables.length },
+    { id: 'keyvalues' as const, label: 'Key-Values', icon: Key, count: result.key_values.length },
+    { id: 'signatures' as const, label: 'Signatures', icon: PenTool, count: result.signatures.length },
+  ];
 
   return (
     <div className="card overflow-hidden">
