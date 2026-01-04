@@ -49,6 +49,16 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Free disk space (Linux)
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+          df -h
+
       - name: Install system dependencies (Linux)
         if: matrix.os == 'ubuntu-22.04'
         run: |
